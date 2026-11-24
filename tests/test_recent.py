@@ -10,6 +10,7 @@ import recent  # noqa: E402
 
 NOW = datetime(2026, 11, 24, 12, 0, tzinfo=timezone.utc)
 FIXTURE = (ROOT / "tests" / "fixtures" / "releases.atom").read_bytes()
+COMMITS = (ROOT / "tests" / "fixtures" / "commits.atom").read_bytes()
 README = "intro\n<!-- recent:start -->\n<!-- recent:end -->\noutro\n"
 
 
@@ -64,6 +65,28 @@ class RenderTest(unittest.TestCase):
         self.assertEqual(
             recent.render({"git-time": FIXTURE}, now=NOW),
             recent.render({"git-time": FIXTURE}, now=NOW),
+        )
+
+
+class CommitFallbackTest(unittest.TestCase):
+    def test_falls_back_to_newest_real_commit_without_release(self):
+        commits = {"vagrant-registry": COMMITS}
+        self.assertEqual(
+            recent.render({"vagrant-registry": b""}, now=NOW, commits=commits),
+            "- **[vagrant-registry](https://github.com/rmoriz/vagrant-registry/commit/bbb)**"
+            " — cache catalogs at the edge, not in the browser (2026-11-24)",
+        )
+
+    def test_fresh_release_wins_over_commit(self):
+        block = recent.render(
+            {"git-time": FIXTURE}, now=NOW, commits={"git-time": COMMITS}
+        )
+        self.assertNotIn("/commit/", block)
+
+    def test_stale_commit_is_dropped(self):
+        stale = feed(("docs: old entry", "2023-01-01T00:00:00Z"))
+        self.assertEqual(
+            recent.render({"repo": b""}, now=NOW, commits={"repo": stale}), ""
         )
 
 

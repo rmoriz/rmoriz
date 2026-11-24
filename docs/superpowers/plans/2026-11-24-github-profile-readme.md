@@ -15,7 +15,8 @@
 - Language: English. Tone: plain, no buzzwords, no emoji, no "available for hire" cliché — one `Contract work:` line.
 - Contact: `roland@moriz.de` (taken from public commit signatures).
 - No stats cards, badges, skill icons, snake, WakaTime.
-- Dynamic content limited to the `recent` block. Feed repos: `git-time`, `microwave-development`, `ai-classification-milter`, `vagrant-registry`.
+- Dynamic content limited to the `recent` block. Feed repos: `git-time`, `microwave-development`, `vagrant-registry`.
+- Repos without a fresh release contribute their newest non-chore commit instead (feat/fix/perf/refactor/data), stripped of the conventional prefix.
 - At most 5 entries, newest first, each `- **[repo](link)** — title (YYYY-MM-DD)`.
 - Workflow: daily 06:17 UTC + `workflow_dispatch`, `permissions: contents: write`, no third-party actions.
 
@@ -53,7 +54,6 @@ Verifiable git timestamps, ACME challenges that survive a restart, Chef infra in
 ## Selected work
 
 - **[vagrant-registry](https://github.com/rmoriz/vagrant-registry)** — read-only Vagrant box registry, one handler serving catalog JSON as Cloudflare Worker and as a container
-- **[ai-classification-milter](https://github.com/rmoriz/ai-classification-milter)** — Postfix pre-queue milter that asks several decision models in parallel and never drops mail
 - **[netbird-embed-rs](https://github.com/rmoriz/netbird-embed-rs)** — a WireGuard mesh node embedded into a Rust application through Go c-shared FFI
 
 ## Recently shipped

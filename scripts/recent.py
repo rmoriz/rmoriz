@@ -11,11 +11,15 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-REPOS = ("git-time", "microwave-development", "ai-classification-milter", "vagrant-registry")
+REPOS = ("git-time", "microwave-development", "vagrant-registry")
 FEED = "https://github.com/rmoriz/{repo}/releases.atom"
+COMMITS = "https://github.com/rmoriz/{repo}/commits/main.atom"
 MAX_AGE = timedelta(days=120)
 MAX_ENTRIES = 5
 MAX_PER_REPO = 2
+SKIP_PREFIX = re.compile(r"^(chore|docs|test|ci|build|style)(\([^)]*\))?!?:\s*")
+KEEP_PREFIX = re.compile(r"^(feat|fix|perf|refactor|revert|data)(\([^)]*\))?!?:\s*")
+SKIP_TITLE = ("Merge pull request", "Merge branch")
 START = "<!-- recent:start -->"
 END = "<!-- recent:end -->"
 README = Path(__file__).resolve().parent.parent / "README.md"
@@ -29,7 +33,7 @@ def escape(text: str) -> str:
     return " ".join(text.split())
 
 
-def parse(feed: bytes, repo: str) -> list[tuple[datetime, str]]:
+def parse(feed: bytes, repo: str, kind: str = "release") -> list[tuple[datetime, str]]:
     """Yield (updated, rendered line) for every usable entry in one feed."""
     try:
         root = ET.fromstring(feed)
@@ -39,6 +43,10 @@ def parse(feed: bytes, repo: str) -> list[tuple[datetime, str]]:
     entries = []
     for entry in root.findall("a:entry", NS):
         title = (entry.findtext("a:title", namespaces=NS) or "").strip()
+        if kind == "commit":
+            if title.startswith(SKIP_TITLE) or SKIP_PREFIX.match(title):
+                continue
+            title = KEEP_PREFIX.sub("", title)
         updated = entry.findtext("a:updated", namespaces=NS) or ""
         link = ""
         for candidate in entry.findall("a:link", NS):
@@ -56,14 +64,28 @@ def parse(feed: bytes, repo: str) -> list[tuple[datetime, str]]:
     return entries
 
 
-def render(feeds: dict[str, bytes], now: datetime) -> str:
-    """Return the block body, newest first, or "" when nothing is fresh."""
+def render(feeds: dict[str, bytes], now: datetime, commits: dict[str, bytes] | None = None) -> str:
+    """Return the block body, newest first, or "" when nothing is fresh.
+
+    A repo without a fresh release falls back to its newest real commit.
+    """
+    commits = commits or {}
     entries = []
     for repo, feed in feeds.items():
-        per_repo = sorted(parse(feed, repo), reverse=True)[:MAX_PER_REPO]
-        entries.extend(per_repo)
-    fresh = [line for when, line in sorted(entries, reverse=True) if now - when <= MAX_AGE]
-    return "\n".join(fresh[:MAX_ENTRIES])
+        fresh = sorted(
+            (entry for entry in parse(feed, repo) if now - entry[0] <= MAX_AGE), reverse=True
+        )
+        if not fresh and repo in commits:
+            fresh = sorted(
+                (
+                    entry
+                    for entry in parse(commits[repo], repo, "commit")
+                    if now - entry[0] <= MAX_AGE
+                ),
+                reverse=True,
+            )[:1]
+        entries.extend(fresh[:MAX_PER_REPO])
+    return "\n".join(line for _, line in sorted(entries, reverse=True)[:MAX_ENTRIES])
 
 
 def splice(readme: str, block: str) -> str:
@@ -75,23 +97,23 @@ def splice(readme: str, block: str) -> str:
     return f"{head}{START}\n{block}\n{END}{tail}"
 
 
-def fetch(repo: str) -> bytes:
-    request = urllib.request.Request(
-        FEED.format(repo=repo), headers={"User-Agent": "rmoriz-profile-readme"}
-    )
+def fetch(url: str) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": "rmoriz-profile-readme"})
     with urllib.request.urlopen(request, timeout=20) as response:
         return response.read(500_000)
 
 
 def main(argv: list[str]) -> int:
-    feeds = {}
+    feeds: dict[str, bytes] = {}
+    commits: dict[str, bytes] = {}
     for repo in REPOS:
-        try:
-            feeds[repo] = fetch(repo)
-        except (urllib.error.URLError, OSError):
-            continue
+        for url, into in ((FEED, feeds), (COMMITS, commits)):
+            try:
+                into[repo] = fetch(url.format(repo=repo))
+            except (urllib.error.URLError, OSError):
+                into.setdefault(repo, b"")
 
-    block = render(feeds, datetime.now(timezone.utc))
+    block = render(feeds, datetime.now(timezone.utc), commits)
     if "--dry-run" in argv:
         print(block or "(empty)")
         return 0
