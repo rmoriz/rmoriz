@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Recent Commits to vagrant-registry:main</title>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/aaa</id>
+    <link type="text/html" rel="alternate" href="https://github.com/rmoriz/vagrant-registry/commit/aaa"/>
+    <title>chore: keep the work directory out of git</title>
+    <updated>2026-11-24T21:05:26Z</updated>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/bbb</id>
+    <link type="text/html" rel="alternate" href="https://github.com/rmoriz/vagrant-registry/commit/bbb"/>
+    <title>perf: cache catalogs at the edge, not in the browser</title>
+    <updated>2026-11-24T20:00:00Z</updated>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/ccc</id>
+    <link type="text/html" rel="alternate" href="https://github.com/rmoriz/vagrant-registry/commit/ccc"/>
+    <title>Merge pull request #1 from rmoriz/feat/read-only-registry</title>
+    <updated>2026-11-24T19:00:00Z</updated>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/ddd</id>
+    <link type="text/html" rel="alternate" href="https://github.com/rmoriz/vagrant-registry/commit/ddd"/>
+    <title>docs: old entry</title>
+    <updated>2023-01-01T00:00:00Z</updated>
+  </entry>
+</feed>
