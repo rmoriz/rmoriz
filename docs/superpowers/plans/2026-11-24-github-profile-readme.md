@@ -15,7 +15,7 @@
 - Language: English. Tone: plain, no buzzwords, no emoji, no "available for hire" cliché — one `Contract work:` line.
 - Contact: `roland@moriz.de` (taken from public commit signatures).
 - No stats cards, badges, skill icons, snake, WakaTime.
-- Dynamic content limited to the `recent` block. Feed repos: `git-time`, `microwave-development`, `ai-classification-milter`, `unspam`.
+- Dynamic content limited to the `recent` block. Feed repos: `git-time`, `microwave-development`, `ai-classification-milter`, `vagrant-registry`.
 - At most 5 entries, newest first, each `- **[repo](link)** — title (YYYY-MM-DD)`.
 - Workflow: daily 06:17 UTC + `workflow_dispatch`, `permissions: contents: write`, no third-party actions.
 

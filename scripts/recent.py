@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-REPOS = ("git-time", "microwave-development", "ai-classification-milter", "unspam")
+REPOS = ("git-time", "microwave-development", "ai-classification-milter", "vagrant-registry")
 FEED = "https://github.com/rmoriz/{repo}/releases.atom"
 MAX_AGE = timedelta(days=120)
 MAX_ENTRIES = 5
