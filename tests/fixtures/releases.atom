@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Release notes from git-time</title>
+  <entry>
+    <title>v1.2.0</title>
+    <updated>2026-11-20T10:00:00Z</updated>
+    <link rel="alternate" href="https://github.com/rmoriz/git-time/releases/tag/v1.2.0"/>
+  </entry>
+  <entry>
+    <title>Fix `x` [again]</title>
+    <updated>2026-11-21T10:00:00Z</updated>
+    <link rel="alternate" href="https://github.com/rmoriz/git-time/releases/tag/v1.2.1"/>
+  </entry>
+  <entry>
+    <title>v0.1.0</title>
+    <updated>2024-01-01T00:00:00Z</updated>
+    <link rel="alternate" href="https://github.com/rmoriz/git-time/releases/tag/v0.1.0"/>
+  </entry>
+</feed>
