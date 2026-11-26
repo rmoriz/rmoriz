@@ -20,7 +20,7 @@ Projects outside GitHub.
 - **[radumschau.de](https://radumschau.de/)** — an automated podcast
 - **[@lisa_radieschen](https://social.entrypoint.sh/@lisa_radieschen)** — automated journalism on bicycle politics in Munich
 - **[@radverkehr_muenchen](https://social.entrypoint.sh/@radverkehr_muenchen)** — a feed of reported infrastructure issues in Munich
-- **[@schachnews](https://social.entrypoint.sh/@schachnews)** — a German chess news aggregator
+- **[@schachnachrichten](https://social.entrypoint.sh/@schachnachrichten)** — a German chess news aggregator
 
 ## Recently shipped
 
