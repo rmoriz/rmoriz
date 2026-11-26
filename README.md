@@ -10,9 +10,6 @@ Verifiable git timestamps, ACME challenges that survive a restart, Chef Infra in
 - **[dns-persist-01-example-rust](https://github.com/rmoriz/dns-persist-01-example-rust)** — ACME dns-persist-01 challenge where the validation record derives from account, domain and CA instead of a per-order token
 - **[microwave-development](https://github.com/rmoriz/microwave-development)** — a Chef Infra server implementation in Rust
 - **[cinc-mirror](https://github.com/rmoriz/cinc-mirror)** — mirrors Cinc packages to GHCR as OCI artifacts, verifying each package against its published hash
-
-## Selected work
-
 - **[vagrant-registry](https://github.com/rmoriz/vagrant-registry)** — read-only Vagrant box registry; one handler serves catalog JSON both as a Cloudflare Worker and as a container
 - **[netbird-embed-rs](https://github.com/rmoriz/netbird-embed-rs)** — a WireGuard mesh node embedded into a Rust application through Go c-shared FFI
 
