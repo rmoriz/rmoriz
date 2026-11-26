@@ -15,6 +15,15 @@ Verifiable git timestamps, ACME challenges that survive a restart, Chef infra in
 - **[vagrant-registry](https://github.com/rmoriz/vagrant-registry)** — read-only Vagrant box registry, one handler serving catalog JSON as Cloudflare Worker and as a container
 - **[netbird-embed-rs](https://github.com/rmoriz/netbird-embed-rs)** — a WireGuard mesh node embedded into a Rust application through Go c-shared FFI
 
+## External projects
+
+Projects outside GitHub.
+
+- **[radumschau.de](https://radumschau.de/)** — an automated podcast
+- **[@lisa_radieschen](https://social.entrypoint.sh/@lisa_radieschen)** — automated journalism on bicycle politics in Munich
+- **[@radverkehr_muenchen](https://social.entrypoint.sh/@radverkehr_muenchen)** — a feed of reported infrastructure issues in Munich
+- **[@schachnews](https://social.entrypoint.sh/@schachnews)** — a German chess news aggregator
+
 ## Recently shipped
 
 <!-- recent:start -->
