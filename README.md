@@ -2,14 +2,14 @@
 
 Verifiable git timestamps, ACME challenges that survive a restart, Chef Infra in Rust, a package mirror that verifies every download against its published hash. Small tools, self-hosted, no vendor in the middle.
 
-**Contract work:** scoped projects on Rust, Ruby, ACME/PKI, Chef/CINC migrations, SRE and hardened self-hosted setups → [roland@moriz.de](mailto:roland@moriz.de)
+**Contract work:** scoped projects on Rust, Ruby, ACME/PKI, Chef/Cinc migrations, SRE and hardened self-hosted setups → [roland@moriz.de](mailto:roland@moriz.de)
 
 ## Now
 
 - **[git-time](https://github.com/rmoriz/git-time)** — git with verifiable RFC 3161 timestamps
 - **[dns-persist-01-example-rust](https://github.com/rmoriz/dns-persist-01-example-rust)** — ACME dns-persist-01 challenge where the validation record derives from account, domain and CA instead of a per-order token
 - **[microwave-development](https://github.com/rmoriz/microwave-development)** — a Chef Infra server implementation in Rust
-- **[cinc-mirror](https://github.com/rmoriz/cinc-mirror)** — mirrors CINC packages to GHCR as OCI artifacts, verifying each package against its published hash
+- **[cinc-mirror](https://github.com/rmoriz/cinc-mirror)** — mirrors Cinc packages to GHCR as OCI artifacts, verifying each package against its published hash
 
 ## Selected work
 
@@ -37,7 +37,7 @@ Projects outside GitHub.
 
 ## Stack
 
-Rust · Ruby · Chef/CINC · ACME/PKI · Postfix · Linux · DNS · self-hosted everything
+Rust · Ruby · Chef/Cinc · ACME/PKI · Postfix · Linux · DNS · self-hosted everything
 
 ## Elsewhere
 
