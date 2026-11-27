@@ -25,11 +25,11 @@ Projects outside GitHub.
 ## Recently shipped
 
 <!-- recent:start -->
+- **[bird-mcp](https://github.com/rmoriz/bird-mcp/commit/41bb05fb8af25feab08a64629d5d81c0e605f103)** — Simulate reverse/PTR zones in the lab WHOIS (2026-11-27)
 - **[git-time](https://github.com/rmoriz/git-time/releases/tag/v0.3.1)** — v0.3.1 (2026-11-25)
 - **[vagrant-registry](https://github.com/rmoriz/vagrant-registry/commit/0c092ca1ed363d9891e68961ddae44a65162566f)** — cache catalogs at the edge, not in the browser (2026-11-24)
 - **[git-time](https://github.com/rmoriz/git-time/releases/tag/v0.3.0)** — v0.3.0 (2026-11-23)
 - **[microwave-development](https://github.com/rmoriz/microwave-development/releases/tag/v0.6.3)** — v0.6.3 (2026-11-13)
-- **[microwave-development](https://github.com/rmoriz/microwave-development/releases/tag/v0.6.2)** — v0.6.2 (2026-11-12)
 <!-- recent:end -->
 
 ## Stack

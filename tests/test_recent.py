@@ -23,6 +23,22 @@ def feed(*entries: tuple[str, str]) -> bytes:
     return f'<feed xmlns="http://www.w3.org/2005/Atom">{body}</feed>'.encode()
 
 
+def rolling_feed(*extra: tuple[str, str]) -> bytes:
+    """A feed whose newest release is a rolling 'latest' build, plus optional normal ones."""
+    entries = [
+        '<entry><title>Latest build (abc1234)</title>'
+        "<updated>2026-11-22T00:00:00Z</updated>"
+        '<link rel="alternate" href="https://github.com/rmoriz/bird-mcp/releases/tag/latest"/>'
+        "</entry>"
+    ] + [
+        f'<entry><title>{title}</title><updated>{when}</updated>'
+        f'<link rel="alternate" href="https://github.com/rmoriz/bird-mcp/releases/tag/{title}"/>'
+        "</entry>"
+        for title, when in extra
+    ]
+    return f'<feed xmlns="http://www.w3.org/2005/Atom">{"".join(entries)}</feed>'.encode()
+
+
 class RenderTest(unittest.TestCase):
     def test_renders_newest_first_and_escapes_titles(self):
         self.assertEqual(
@@ -61,6 +77,12 @@ class RenderTest(unittest.TestCase):
     def test_broken_feed_does_not_raise(self):
         self.assertEqual(recent.render({"git-time": b"<html>404</html>"}, now=NOW), "")
 
+    def test_skips_rolling_latest_release(self):
+        rolling = rolling_feed(("v1.0.0", "2026-11-20T00:00:00Z"))
+        block = recent.render({"bird-mcp": rolling}, now=NOW)
+        self.assertIn("v1.0.0", block)
+        self.assertNotIn("Latest build", block)
+
     def test_output_is_stable(self):
         self.assertEqual(
             recent.render({"git-time": FIXTURE}, now=NOW),
@@ -82,6 +104,15 @@ class CommitFallbackTest(unittest.TestCase):
             {"git-time": FIXTURE}, now=NOW, commits={"git-time": COMMITS}
         )
         self.assertNotIn("/commit/", block)
+
+    def test_rolling_release_falls_back_to_commit(self):
+        block = recent.render(
+            {"vagrant-registry": rolling_feed()},
+            now=NOW,
+            commits={"vagrant-registry": COMMITS},
+        )
+        self.assertIn("/commit/", block)
+        self.assertNotIn("Latest build", block)
 
     def test_stale_commit_is_dropped(self):
         stale = feed(("docs: old entry", "2023-01-01T00:00:00Z"))

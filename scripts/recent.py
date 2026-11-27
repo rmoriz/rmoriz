@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-REPOS = ("git-time", "microwave-development", "vagrant-registry")
+REPOS = ("git-time", "microwave-development", "vagrant-registry", "bird-mcp")
 FEED = "https://github.com/rmoriz/{repo}/releases.atom"
 COMMITS = "https://github.com/rmoriz/{repo}/commits/main.atom"
 MAX_AGE = timedelta(days=120)
@@ -20,6 +20,8 @@ MAX_PER_REPO = 2
 SKIP_PREFIX = re.compile(r"^(chore|docs|test|ci|build|style)(\([^)]*\))?!?:\s*")
 KEEP_PREFIX = re.compile(r"^(feat|fix|perf|refactor|revert|data)(\([^)]*\))?!?:\s*")
 SKIP_TITLE = ("Merge pull request", "Merge branch")
+SKIP_TAGS = ("latest", "continuous", "nightly", "snapshot")
+SKIP_RELEASE_TITLE = re.compile(r"^Latest build\b")
 START = "<!-- recent:start -->"
 END = "<!-- recent:end -->"
 README = Path(__file__).resolve().parent.parent / "README.md"
@@ -58,6 +60,11 @@ def parse(feed: bytes, repo: str, kind: str = "release") -> list[tuple[datetime,
         except ValueError:
             continue
         if not title or not link:
+            continue
+        if kind == "release" and (
+            link.rstrip("/").rsplit("/", 1)[-1] in SKIP_TAGS
+            or SKIP_RELEASE_TITLE.match(title)
+        ):
             continue
         entry_line = f"- **[{repo}]({link})** — {escape(title)} ({when:%Y-%m-%d})"
         entries.append((when, entry_line))
